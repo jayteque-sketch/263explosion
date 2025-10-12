@@ -1294,8 +1294,7 @@ else %}<li class="nav-item"><a href="{{ url_for('login') }}" class="btn btn-dang
     ''', sectors=SECTORS, user=user, bg_url=bg_url, metals=metals, last_updated=last_updated)
 
 
-if __name__ == '__main__':
-  app.run(debug=True) EOF
+
 
 
 
