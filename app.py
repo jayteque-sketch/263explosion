@@ -51,6 +51,8 @@ SECTORS = [
 # Country codes for phone numbers
 COUNTRY_CODES = [
     {"code": "+263", "country": "Zimbabwe"},
+    {"code": "+260", "country": "Zambia"},
+    {"code": "+971", "country": "UAE"},
     {"code": "+27", "country": "South Africa"},
     {"code": "+1", "country": "USA/Canada"},
     {"code": "+44", "country": "UK"},
