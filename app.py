@@ -10,6 +10,10 @@ import requests
 
 # Initialize Flask app
 app = Flask(__name__)
+
+# ---------------------- Secret Key (for sessions) ----------------------
+app.secret_key = os.environ.get('SECRET_KEY', 'fallback-dev-key')
+
 # ---------------------- Database Configuration ----------------------
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///site.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
