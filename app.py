@@ -1,28 +1,33 @@
-from flask import Flask, render_template_string, request, url_for, session, redirect, flash
+from flask import Flask, render_template, render_template_string, request, url_for, session, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from datetime import datetime
 import os
 import time
 import requests
-from datetime import datetime
 
+# Initialize Flask app
 app = Flask(__name__)
-
-# Database configuration for Render
-database_url = os.environ.get('DATABASE_URL')
-if database_url:
-    if database_url.startswith("postgres://"):
-        database_url = database_url.replace("postgres://", "postgresql://", 1)
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-else:
-    # Fallback for local development
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-
+# ---------------------- Database Configuration ----------------------
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///site.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = os.environ.get('SECRET_KEY', 'dev-key-change-in-production')
-
 db = SQLAlchemy(app)
+
+# ---------------------- Email Configuration ----------------------
+app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
+app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 465))
+app.config['MAIL_USE_SSL'] = os.environ.get('MAIL_USE_SSL', 'True') == 'True'
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
+
+mail = Mail(app)
+
+from flask_mail import Mail
+mail = Mail(app)
+
 
 # Create directories
 os.makedirs('static/uploads', exist_ok=True)
@@ -1702,7 +1707,6 @@ def markets_metals():
     </body>
     </html>
     ''', user=user, bg_url=bg_url, metals=metals, last_updated=last_updated, nav_html=default_nav(user))
-
 
 
 
