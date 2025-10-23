@@ -8,11 +8,18 @@ import os
 import time
 import requests
 
-# Initialize Flask app
-app = Flask(__name__)
+# ---------------------- Initialize Flask app ----------------------
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 # ---------------------- Secret Key (for sessions) ----------------------
 app.secret_key = os.environ.get('SECRET_KEY', 'fallback-dev-key')
+
+# ---------------------- Upload Folder Configuration ----------------------
+# This folder will be mounted to your Render persistent disk
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+# Ensure the uploads folder exists (useful for local testing)
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # ---------------------- Database Configuration ----------------------
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///site.db')
