@@ -211,11 +211,11 @@ with app.app_context():
     migrate_database()
     # Initialize default data only if no users exist
     if User.query.count() == 0:
-        # Default sponsors - ONLY Hitbay Sanitation
+        # Default sponsors - UPDATED with Horizon Vehicles
         if Sponsor.query.count() == 0:
             default_sponsors = [
                 {"name": "Hitbay Sanitation", "image": "hitbay.jpg", "url": "https://www.hitbaysanitation.co.zw"},
-                {"name": "Horizon Vehicles", "image": "horizonvehicles.jpeg", "url": "https://horizonvehicles.com/country/zimbabwe"}             ]
+                {"name": "Horizon Vehicles", "image": "horizonvehicles.jpg", "url": "https://horizonvehicles.com/country/zimbabwe"}             ]
             for sponsor_data in default_sponsors:
                 sponsor = Sponsor(**sponsor_data)
                 db.session.add(sponsor)
